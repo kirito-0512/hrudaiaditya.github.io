@@ -694,6 +694,18 @@ const papersGrid=document.getElementById('papersGrid');
 const paperCount=document.getElementById('paperCount');
 const paperSearchInput=document.getElementById('paperSearch');
 const filterContainer=document.getElementById('categoryFilters');
+const CATEGORY_FILTERS=[
+  {key:'all',label:'All'},
+  {key:'agents',label:'Agents'},
+  {key:'rl',label:'RL'},
+  {key:'efficient',label:'Efficiency'}
+];
+const CATEGORY_LABELS={
+  agents:'Agents',
+  rl:'RL',
+  efficient:'Efficiency',
+  general:'General'
+};
 let papersData=[];
 let currentFilter='all';
 
@@ -727,11 +739,11 @@ function normalizeRecord(record){
 
 function buildPaperObject(record){
   const normalized=normalizeRecord(record);
-  const category=normalized.category||normalized.subject||'General';
   const source=normalized.source||'';
   const title=normalized.title||'Untitled';
   const highlight=normalized.highlight||normalized.summary||'';
   const author=normalized.author||'Unknown';
+  const categoryKey=categorizePaper([title,highlight,normalized.category||normalized.subject||''].join(' '));
   const score=parseFloat(normalized.score)||0;
   const rawScore=normalized.raw_score||normalized.rawscore||'';
   const publishedDate=normalized.publisheddate||normalized.date||'';
@@ -740,8 +752,9 @@ function buildPaperObject(record){
     highlight,
     author,
     source,
-    category,
-    categoryKey:category.toLowerCase(),
+    sourceUrl:normalizeSourceUrl(source,title),
+    category:CATEGORY_LABELS[categoryKey]||'General',
+    categoryKey,
     score,
     rawScore,
     publishedDate,
@@ -760,34 +773,54 @@ function getScoreColor(score){
   return score>=0.62?'#00ff88':score>=0.55?'#ffa931':'#6b7a96';
 }
 
+function categorizePaper(text){
+  const lower=(text||'').toLowerCase();
+  if(/\b(agent|agents|mcp|tool|orchestration|workflow|co-scientist)\b/.test(lower))return 'agents';
+  if(/\b(rl|reinforcement|policy|reward|rft)\b/.test(lower))return 'rl';
+  if(/\b(efficient|efficiency|sparse|compression|compress|pruning|quantiz|distill|small model|latency|throughput|memory)\b/.test(lower))return 'efficient';
+  return 'general';
+}
+
+function normalizeSourceUrl(source,title=''){
+  const raw=(source||'').trim();
+  if(!raw)return '';
+  const sourceLower=raw.toLowerCase();
+  if(/^https?:\/\//i.test(raw))return raw;
+  if(/^www\./i.test(raw))return `https://${raw}`;
+  if(/^arxiv:\s*/i.test(raw))return `https://arxiv.org/abs/${raw.replace(/^arxiv:\s*/i,'').trim()}`;
+  if(/^\d{4}\.\d{4,5}(v\d+)?$/i.test(raw))return `https://arxiv.org/abs/${raw}`;
+  if(sourceLower.includes('arxiv.org')){
+    const cleaned=raw.replace(/^https?:\/\//i,'').replace(/\/+$/,'');
+    if(/^arxiv\.org$/i.test(cleaned)&&title){
+      return `https://arxiv.org/search/?query=${encodeURIComponent(title)}&searchtype=all`;
+    }
+    return `https://${cleaned}`;
+  }
+  if(/^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(raw))return `https://${raw}`;
+  return '';
+}
+
 function getSourceLabel(source){
-  if(!source)return 'N/A';
+  const normalized=normalizeSourceUrl(source);
+  if(!normalized)return source||'N/A';
   try{
-    const parsed=new URL(source);
+    const parsed=new URL(normalized);
     return parsed.hostname.replace(/^www\./,'');
   } catch(_err){
-    return source;
+    return source||'N/A';
   }
 }
 
 function renderFilters(){
   if(!filterContainer)return;
-  const categories=Array.from(new Set(papersData.map(p=>p.category))).sort();
   filterContainer.innerHTML='';
-  const allBtn=document.createElement('button');
-  allBtn.type='button';
-  allBtn.className='filter-btn active';
-  allBtn.textContent='All';
-  allBtn.dataset.category='all';
-  allBtn.addEventListener('click',()=>setFilter('all',allBtn));
-  filterContainer.appendChild(allBtn);
-  categories.forEach(cat=>{
+  CATEGORY_FILTERS.forEach(({key,label},index)=>{
     const btn=document.createElement('button');
     btn.type='button';
-    btn.className='filter-btn';
-    btn.textContent=cat;
-    btn.dataset.category=cat.toLowerCase();
-    btn.addEventListener('click',()=>setFilter(btn.dataset.category,btn));
+    btn.className=index===0?'filter-btn active':'filter-btn';
+    btn.textContent=label;
+    btn.dataset.category=key;
+    btn.addEventListener('click',()=>setFilter(key,btn));
     filterContainer.appendChild(btn);
   });
 }
@@ -815,15 +848,19 @@ function filterPapers(){
       const scoreLabel=p.score?`Score ${p.score.toFixed(2)}`:'';
       const rawLine=p.rawScore?`<div class="paper-raw">Raw Score: ${p.rawScore}</div>`:'';
       const sourceLine=`<div class="paper-source">Source: ${getSourceLabel(p.source)}</div>`;
-      return `<div class="paper-card" onclick="openPaperLink(${JSON.stringify(p.source)})"><div class="paper-meta"><span class="paper-date">${p.displayDate}</span><span class="paper-category">${p.category}</span><span class="paper-score" style="color:${color};border:1px solid ${color}40;background:${color}12">${scoreLabel}</span></div><div class="paper-title">${p.title}</div><div class="paper-auth">by ${p.author}</div><div class="paper-highlight">${p.highlight}</div>${sourceLine}${rawLine}</div>`;
+      const sourceData=encodeURIComponent(p.sourceUrl||p.source||'');
+      return `<div class="paper-card" data-source="${sourceData}" onclick="openPaperLink(this.dataset.source)"><div class="paper-meta"><span class="paper-date">${p.displayDate}</span><span class="paper-category">${p.category}</span><span class="paper-score" style="color:${color};border:1px solid ${color}40;background:${color}12">${scoreLabel}</span></div><div class="paper-title">${p.title}</div><div class="paper-auth">by ${p.author}</div><div class="paper-highlight">${p.highlight}</div>${sourceLine}${rawLine}</div>`;
     }).join('');
   }
   paperCount.innerHTML=`Showing <span>${filtered.length}</span> of <span>${papersData.length}</span> curated papers`;
 }
 
-function openPaperLink(url){
+function openPaperLink(encodedUrl){
+  if(!encodedUrl)return;
+  const decoded=decodeURIComponent(encodedUrl);
+  const url=normalizeSourceUrl(decoded);
   if(!url)return;
-  window.open(url,'_blank');
+  window.open(url,'_blank','noopener,noreferrer');
 }
 
 async function loadPapers(){
