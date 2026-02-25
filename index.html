@@ -16,7 +16,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Libre Baskerville',serif;overflow-x:hidden;cursor:none;}
+body{background:var(--bg);color:var(--text);font-family:'Libre Baskerville',serif;font-size:18px;line-height:1.9;overflow-x:hidden;cursor:none;}
 
 /* cursor */
 .cursor{position:fixed;top:0;left:0;width:10px;height:10px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.12s ease;mix-blend-mode:screen;}
@@ -41,7 +41,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:15px 40px;display:fl
 h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,10vw,120px);line-height:0.9;letter-spacing:2px;color:var(--text);margin-bottom:8px;}
 h1 span{color:var(--green);}
 .hero-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3.5vw,44px);letter-spacing:4px;color:var(--muted);margin-bottom:28px;}
-.hero-desc{font-size:17px;line-height:1.9;color:var(--muted);max-width:600px;margin-bottom:44px;}
+.hero-desc{font-size:19px;line-height:1.9;color:var(--muted);max-width:640px;margin-bottom:44px;}
 .hero-desc em{color:var(--text);font-style:italic;}
 .hero-stats{display:flex;gap:36px;margin-bottom:44px;flex-wrap:wrap;}
 .stat{display:flex;flex-direction:column;gap:4px;}
@@ -173,13 +173,14 @@ h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,5.5vw,68px);letter-s
 
 /* RESEARCH */
 #research{background:var(--bg);}
-.research-desc{font-size:15px;line-height:1.8;color:var(--muted);max-width:600px;margin-bottom:34px;}
+.research-desc{font-size:17px;line-height:1.85;color:var(--muted);max-width:640px;margin-bottom:34px;}
 .research-controls{display:flex;gap:9px;margin-bottom:30px;flex-wrap:wrap;}
 .search-box{flex:1;min-width:180px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:11px 15px;font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;transition:border-color 0.2s;}
 .search-box:focus{border-color:var(--green);}
 .search-box::placeholder{color:var(--muted);}
 .filter-btn{padding:11px 15px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all 0.2s;}
 .filter-btn.active,.filter-btn:hover{border-color:var(--green);color:var(--green);background:rgba(0,255,136,0.04);}
+.filter-btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
 .papers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px;max-height:740px;overflow-y:auto;padding-right:4px;}
 .papers-grid::-webkit-scrollbar{width:3px;}
 .papers-grid::-webkit-scrollbar-track{background:var(--bg3);}
@@ -192,10 +193,15 @@ h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,5.5vw,68px);letter-s
 .paper-date{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
 .paper-score{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 7px;}
 .paper-title{font-family:'Libre Baskerville',serif;font-size:13px;line-height:1.5;color:var(--text);margin-bottom:8px;}
+.paper-category{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--green);text-transform:uppercase;margin-left:auto;}
 .paper-highlight{font-size:12px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.paper-auth{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.5px;color:var(--muted);margin-bottom:10px;}
+.paper-source{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.6px;color:var(--green);margin-top:8px;text-transform:uppercase;word-break:break-all;}
+.paper-raw{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:12px;letter-spacing:0.5px;}
 .paper-expanded .paper-highlight{-webkit-line-clamp:unset;}
 .paper-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:14px;}
 .paper-count span{color:var(--green);}
+.paper-error{padding:24px;border:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.4);border-radius:10px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--muted);}
 
 /* CERTS (bottom, collapsible) */
 #certs{background:var(--bg2);}
@@ -272,6 +278,7 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
     <div class="hero-sub">I build things that think.</div>
     <p class="hero-desc">
       I spend my days at Infosys turning half-formed ideas about agentic AI into systems that actually ship.
+      Right now that means splitting time between Infosys Agentic Foundry/Topaz Fabric and preparing the Enterprise MCP Registry, which I've personally deployed across enterprise clients.
       My nights go to reading papers, <em>poking at RL fine-tuning experiments</em>, and occasionally staring at telescope images wondering about galaxy formation.
       If it involves learning systems, feedback loops, or things that surprise you, I'm probably already tinkering with it.
     </p>
@@ -305,7 +312,7 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
           That curiosity pulled me through an <em>Honours in AI/ML at Vasavi College of Engineering</em> and eventually into building production AI systems at scale.
         </p>
         <p>
-          Right now I work on <strong>Infosys Agentic Foundry</strong>  one of the more interesting engineering problems I've encountered. We're not just wrapping APIs; we're figuring out how to give agents real memory, real tools, and the ability to reason across multi-step enterprise workflows without hallucinating on the parts that matter. Getting accuracy from 76% to 91% across three domains in months taught me more about evaluation design than any course could.
+          Right now I work on <strong>Infosys Agentic Foundry/Topaz Fabric</strong> while preparing the Enterprise MCP Registry, personally deploying it across enterprise clients so the data and trust layers stay solid during every rollout. A big part of this work is shaping reusable <strong>agent skills</strong> so teams can plug in domain actions without rewriting the core orchestration each time. We're not just wrapping APIs; we're figuring out how to give agents real memory, real tools, and the ability to reason across multi-step enterprise workflows without hallucinating on the parts that matter. Getting accuracy from 76% to 91% across three domains in months taught me more about evaluation design than any course could.
         </p>
         <p>
           Outside of work, I have a weird obsession with <em>reinforcement learning fine-tuning</em>  specifically what happens when you try to teach LLMs through environment feedback rather than human labels. I've been equally fascinated by <em>evolutionary algorithms</em> ever since I realised that natural selection is basically gradient-free optimisation running for 3.8 billion years. I keep thinking there's something underexplored in hybrid evolutionary-RL approaches for sparse reward problems.
@@ -453,7 +460,7 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
           This one started as a personal frustration. Every time I wanted to experiment with a new agent architecture, I'd spend three days wiring up infrastructure before writing a single line of actual agent logic. So I built the platform I wished existed  a fully containerised environment where you can go from idea to running multi-agent workflow in minutes, not days.
         </p>
         <p class="project-intro">
-          The real design challenge was observability. <em>Agents fail in ways that are invisible if you're not looking.</em> I integrated OpenTelemetry end-to-end, piped everything into Elasticsearch, and built Grafana dashboards that actually tell you whether your agent is reasoning or just confidently hallucinating. Arize Phoenix handles the LLM evaluation side  so you can compare runs, spot regression, and understand exactly where a chain of thought went wrong.
+          The real design challenge was observability. <em>Agents fail in ways that are invisible if you're not looking.</em> I integrated OpenTelemetry end-to-end, piped everything into Elasticsearch, and built Grafana dashboards that actually tell you whether your agent is reasoning or just confidently hallucinating. I also added <strong>file-based search</strong> so agents can ground decisions in uploaded enterprise documents before tool execution. Arize Phoenix handles the LLM evaluation side  so you can compare runs, spot regression, and understand exactly where a chain of thought went wrong.
         </p>
         <div class="variant-row">
           <div class="variant-title">Agent Frameworks Supported</div>
@@ -565,11 +572,8 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
       Every week I read papers obsessively. Not just to stay current, but because the best ideas in AI almost always come from somewhere unexpected. 252 papers read, scored, and distilled. Click any card to expand the full takeaway.
     </p>
     <div class="research-controls">
-      <input type="text" class="search-box" id="paperSearch" placeholder="Search 252 papers..." oninput="filterPapers()">
-      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('agents',this)">Agents</button>
-      <button class="filter-btn" onclick="setFilter('rl',this)">RL</button>
-      <button class="filter-btn" onclick="setFilter('efficient',this)">Efficiency</button>
+      <input type="text" class="search-box" id="paperSearch" placeholder="Search papers..." oninput="filterPapers()">
+      <div class="filter-btn-row" id="categoryFilters"></div>
     </div>
     <div class="papers-grid" id="papersGrid"></div>
     <div class="paper-count" id="paperCount"></div>
@@ -582,11 +586,12 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
     <div class="section-kicker">Credentials</div>
     <h2>Licenses &amp;<br><span style="color:var(--green)">Certifications</span></h2>
     <div class="certs-grid" id="certsGrid">
-      <!-- Top 4 always visible -->
+      <!-- Top 5 always visible -->
       <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(255,112,67,0.15);color:#ff7043;">HF</div><div class="cert-info"><div class="cert-name">AI Agents Fundamentals</div><div class="cert-issuer">Hugging Face</div><div class="cert-date">Apr 2025</div></div></div>
       <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(0,120,215,0.15);color:#5ea7f5;">MS</div><div class="cert-info"><div class="cert-name">Azure AI Engineer Associate</div><div class="cert-issuer">Microsoft · ID: 44AE089657AD473</div><div class="cert-date">Jan 2025</div></div></div>
       <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(0,200,150,0.15);color:#00c896;">DL</div><div class="cert-info"><div class="cert-name">Generative AI with LLMs</div><div class="cert-issuer">DeepLearning.AI</div><div class="cert-date">Jan 2024</div></div></div>
       <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(0,255,136,0.1);color:var(--green);">NPT</div><div class="cert-info"><div class="cert-name">NPTEL Discipline Star  Gen AI</div><div class="cert-issuer">NPTEL / SWAYAM MHRD</div><div class="cert-date">Apr 2023</div></div></div>
+      <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(255,74,0,0.15);color:#ff4a6a;">NV</div><div class="cert-info"><div class="cert-name">NVIDIA-Certified Associate: Accelerated Data Science</div><div class="cert-issuer">NVIDIA</div><div class="cert-date">2025</div></div></div>
       <!-- Hidden certs -->
       <div class="certs-hidden" id="certsHidden">
         <div class="cert-card"><div class="cert-logo" style="background:rgba(255,153,0,0.15);color:#ffa931;">AWS</div><div class="cert-info"><div class="cert-name">AWS Academy Cloud</div><div class="cert-issuer">Amazon Web Services</div><div class="cert-date">Cloud + Applications</div></div></div>
@@ -603,7 +608,7 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
         <div class="cert-card"><div class="cert-logo" style="background:rgba(56,189,248,0.15);color:#38bdf8;">IIT</div><div class="cert-info"><div class="cert-name">NPTEL C and C++</div><div class="cert-issuer">IIT Madras / IIT Kharagpur</div><div class="cert-date">2021</div></div></div>
       </div>
     </div>
-    <button class="see-more-btn" id="seMoreBtn" onclick="toggleCerts()">Show All Certifications (12 more)</button>
+    <button class="see-more-btn" id="seMoreBtn" onclick="toggleCerts()">Show All Certifications</button>
   </div>
 </section>
 
@@ -670,56 +675,175 @@ document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
 
 // certs toggle
 let certsOpen=false;
+const hiddenCertCount=document.querySelectorAll('#certsHidden .cert-card').length;
+const collapsedCertLabel=`Show All Certifications (${hiddenCertCount} more)`;
+const certToggleBtn=document.getElementById('seMoreBtn');
+if(certToggleBtn){certToggleBtn.textContent=collapsedCertLabel;}
 function toggleCerts(){
   const hidden=document.getElementById('certsHidden');
   const btn=document.getElementById('seMoreBtn');
   certsOpen=!certsOpen;
   if(certsOpen){hidden.classList.add('expanded');btn.textContent='Show Fewer';}
-  else{hidden.classList.remove('expanded');btn.textContent='Show All Certifications (12 more)';}
+  else{hidden.classList.remove('expanded');btn.textContent=collapsedCertLabel;}
 }
 
-// papers
-const papers=[
-  {title:"Question Answering on Patient Medical Records with Private Fine-Tuned LLMs",date:"2025-02-12",highlight:"Breakthrough system querying personal health data through wearables, 250x more efficient than GPT-4. Keeps medical data private via edge deployment.",score:0.6,tags:["efficient"]},
-  {title:"Competitive Programming with Large Reasoning Models",date:"2025-02-12",highlight:"RL enhances LLM performance on complex reasoning and coding tasks. Larger scaled-up models surpass specialised systems without handcrafted inference strategies.",score:0.556,tags:["rl"]},
-  {title:"Small Models, Big Impact: Graph-Based Adaptation for Low-Resource Languages",date:"2025-02-17",highlight:"Investigates parameter-efficient adapter methods (Sequential Bottleneck, Invertible Bottleneck, LoRA) for multilingual models on low-resource languages.",score:0.679,tags:["efficient"]},
-  {title:"MLGym: A New Framework and Benchmark for Advancing AI Research Agents",date:"2025-02-21",highlight:"Meta Gym and Gym-Bench: novel framework for evaluating LLM agents on diverse AI research tasks including RL research and synthetic data generation.",score:0.612,tags:["agents"]},
-  {title:"How to Get Your LLM to Generate Challenging Problems for Evaluation",date:"2025-02-21",highlight:"CHASE framework for synthetically generating evaluation problems without human involvement. Achieves 40-60% accuracy across QA, code, and math domains.",score:0.569,tags:[]},
-  {title:"Towards an AI co-scientist",date:"2025-02-27",highlight:"Multi-agent system with generate-debate-evolve approach and test-time compute. Applications in biomedical discovery, drug repurposing, and novel target identification.",score:0.626,tags:["agents"]},
-  {title:"SWE-RL: Advancing LLM Reasoning via RL on Open Software Evolution",date:"2025-02-26",highlight:"Llama3-SWE-RL-70B achieves state-of-the-art on real-world software engineering tasks with generalised reasoning skills that transfer across domains.",score:0.586,tags:["rl"]},
-  {title:"Societal Alignment Frameworks Can Improve LLM Alignment",date:"2025-03-05",highlight:"Proposes insights from societal alignment frameworks and participatory interface designs to address misspecified objectives and uncertainty in LLM alignment.",score:0.65,tags:[]},
-  {title:"Transformers without Normalization",date:"2025-03-14",highlight:"Dynamic Tanh (DyT) replaces normalisation layers in Transformers, achieving equal or better performance across generative models without extensive hyperparameter tuning.",score:0.63,tags:["efficient"]},
-  {title:"DarwinLM: Evolutionary Structured Pruning of Large Language Models",date:"2025-02-17",highlight:"Training-aware structured pruning via evolutionary search and lightweight post-compression training. Validated on Llama-2-7B with significantly reduced training data needs.",score:0.502,tags:["efficient"]},
-  {title:"Native Sparse Attention: Hardware-Aligned and Natively Trainable",date:"2025-02-18",highlight:"NSA combines hierarchical token compression with hardware-aligned optimisations, achieving significant speedups while matching Full Attention benchmark performance.",score:0.503,tags:["efficient"]},
-  {title:"Qwen2.5-VL Technical Report",date:"2025-02-20",highlight:"Cutting-edge vision-language model excelling in visual recognition, document parsing, and long-video comprehension with dynamic resolution processing.",score:0.519,tags:[]},
-  {title:"LLM as a Broken Telephone: Iterative Generation Distorts Information",date:"2025-03-07",highlight:"Iterative generation distorts information in ways influenced by language and chain complexity. Strategic prompting mitigates degradation in long-horizon workflows.",score:0.604,tags:[]},
-  {title:"START: Self-taught Reasoner with Tools",date:"2025-03-07",highlight:"Tool-integrated reasoning LLM using Hint-infer and Hint-RFT self-learning. State-of-the-art on multiple benchmarks, addressing CoT hallucinations.",score:0.48,tags:["agents"]},
-  {title:"Visual-RFT: Visual Reinforcement Fine-Tuning",date:"2025-03-04",highlight:"Novel reinforcement fine-tuning for Large Vision-Language Models with verifiable reward functions. Significant gains in few-shot and fine-grained classification.",score:0.517,tags:["rl"]},
-  {title:"Phi-4-Mini: Compact Multimodal via Mixture-of-LoRAs",date:"2025-03-04",highlight:"Compact generative models excelling in reasoning, multilingual support, and multimodal tasks using group query attention and modality-specific routers.",score:0.516,tags:["efficient"]},
-  {title:"AAD-LLM: Neural Attention-Driven Auditory Scene Understanding",date:"2025-02-26",highlight:"Auditory LLM integrating brain signals via iEEG to decode listener attention. Pioneers intention-aware auditory AI improving speech transcription in multitalker scenarios.",score:0.544,tags:[]},
-  {title:"Quantizing LLMs for Code Generation",date:"2025-03-13",highlight:"Advanced quantisation for LLMs in code generation achieving up to 70% memory reduction with minimal performance loss using code-specific calibration datasets.",score:0.615,tags:["efficient"]},
-  {title:"CLIPPER: Compression enables long-context synthetic data generation",date:"2025-02-21",highlight:"Compression-based method for synthetic narrative claim verification data using intermediate chapter outlines for improved reasoning complexity.",score:0.547,tags:[]},
-  {title:"LLM-Microscope: Hidden Role of Punctuation in Context Memory",date:"2025-02-24",highlight:"Uncovers critical role of minor tokens in LLMs for context maintenance. Introduces toolkit analysing token-level nonlinearity and contextual memory in Transformer embeddings.",score:0.478,tags:[]}
-];
 
+// research feed
+const sheetUrl=atob('aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlRJZHByY2hidS01MS1VaFdnM3F4ek8zT2EyRExXTmhNcUhXVmMyWVZLS09VbnpZOWltcVRDRk9lQTZIUWVmdU9JYzZ6dTE2MzZmUlhuSS9wdWI/b3V0cHV0PWNzdg==');
+const papersGrid=document.getElementById('papersGrid');
+const paperCount=document.getElementById('paperCount');
+const paperSearchInput=document.getElementById('paperSearch');
+const filterContainer=document.getElementById('categoryFilters');
+let papersData=[];
 let currentFilter='all';
-function filterPapers(){
-  const q=document.getElementById('paperSearch').value.toLowerCase();
-  const filtered=papers.filter(p=>{
-    const mQ=!q||p.title.toLowerCase().includes(q)||p.highlight.toLowerCase().includes(q);
-    const mF=currentFilter==='all'||p.tags.includes(currentFilter);
-    return mQ&&mF;
-  });
-  const sc=s=>s>=0.62?'#00ff88':s>=0.55?'#ffa931':'#6b7a96';
-  document.getElementById('papersGrid').innerHTML=filtered.map(p=>{
-    const d=new Date(p.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    const c=sc(p.score);
-    return`<div class="paper-card" onclick="this.classList.toggle('paper-expanded')"><div class="paper-meta"><span class="paper-date">${d}</span><span class="paper-score" style="color:${c};border:1px solid ${c}40;background:${c}10">★ ${p.score}</span></div><div class="paper-title">${p.title}</div><div class="paper-highlight">${p.highlight}</div></div>`;
-  }).join('');
-  document.getElementById('paperCount').innerHTML=`Showing <span>${filtered.length}</span> of <span>${papers.length}</span> curated papers`;
+
+function splitCSVLine(line){
+  const pattern=/,(?=(?:[^"]*"[^"]*")*[^"]*$)/;
+  return line.split(pattern).map(cell=>cell.replace(/^"(.*)"$/,'$1').replace(/""/g,'"').trim());
 }
-function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filterPapers();}
-filterPapers();
+
+function parseCSV(text){
+  const lines=text.trim().split(/\r?\n/).filter(l=>l.trim());
+  if(!lines.length)return[];
+  const header=splitCSVLine(lines.shift());
+  return lines.map(line=>{
+    const values=splitCSVLine(line);
+    if(!values.length)return null;
+    const record={};
+    header.forEach((key,index)=>{ if(!key)return; record[key.trim()]=values[index]||''; });
+    return record;
+  }).filter(Boolean);
+}
+
+function normalizeRecord(record){
+  const normalized={};
+  Object.keys(record).forEach(key=>{
+    if(!key)return;
+    const normalizedKey=key.trim().toLowerCase().replace(/\s+/g,'_');
+    normalized[normalizedKey]=record[key];
+  });
+  return normalized;
+}
+
+function buildPaperObject(record){
+  const normalized=normalizeRecord(record);
+  const category=normalized.category||normalized.subject||'General';
+  const source=normalized.source||'';
+  const title=normalized.title||'Untitled';
+  const highlight=normalized.highlight||normalized.summary||'';
+  const author=normalized.author||'Unknown';
+  const score=parseFloat(normalized.score)||0;
+  const rawScore=normalized.raw_score||normalized.rawscore||'';
+  const publishedDate=normalized.publisheddate||normalized.date||'';
+  return {
+    title,
+    highlight,
+    author,
+    source,
+    category,
+    categoryKey:category.toLowerCase(),
+    score,
+    rawScore,
+    publishedDate,
+    displayDate:formatDate(publishedDate)
+  };
+}
+
+function formatDate(dateStr){
+  if(!dateStr)return 'Unknown Date';
+  const parsed=new Date(dateStr);
+  if(Number.isNaN(parsed))return dateStr;
+  return parsed.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function getScoreColor(score){
+  return score>=0.62?'#00ff88':score>=0.55?'#ffa931':'#6b7a96';
+}
+
+function getSourceLabel(source){
+  if(!source)return 'N/A';
+  try{
+    const parsed=new URL(source);
+    return parsed.hostname.replace(/^www\./,'');
+  } catch(_err){
+    return source;
+  }
+}
+
+function renderFilters(){
+  if(!filterContainer)return;
+  const categories=Array.from(new Set(papersData.map(p=>p.category))).sort();
+  filterContainer.innerHTML='';
+  const allBtn=document.createElement('button');
+  allBtn.type='button';
+  allBtn.className='filter-btn active';
+  allBtn.textContent='All';
+  allBtn.dataset.category='all';
+  allBtn.addEventListener('click',()=>setFilter('all',allBtn));
+  filterContainer.appendChild(allBtn);
+  categories.forEach(cat=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='filter-btn';
+    btn.textContent=cat;
+    btn.dataset.category=cat.toLowerCase();
+    btn.addEventListener('click',()=>setFilter(btn.dataset.category,btn));
+    filterContainer.appendChild(btn);
+  });
+}
+
+function setFilter(category,btn){
+  currentFilter=category;
+  filterContainer?.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn?.classList.add('active');
+  filterPapers();
+}
+
+function filterPapers(){
+  const query=paperSearchInput?.value?.trim().toLowerCase()||'';
+  const filtered=papersData.filter(p=>{
+    const matchesFilter=currentFilter==='all'||p.categoryKey===currentFilter;
+    const haystack=[p.title,p.highlight,p.author,p.category].join(' ').toLowerCase();
+    const matchesQuery=!query||haystack.includes(query);
+    return matchesFilter&&matchesQuery;
+  });
+  if(!filtered.length){
+    papersGrid.innerHTML='<div class="paper-error">No papers match this search. Try clearing filters.</div>';
+  } else {
+    papersGrid.innerHTML=filtered.map(p=>{
+      const color=getScoreColor(p.score);
+      const scoreLabel=p.score?`Score ${p.score.toFixed(2)}`:'';
+      const rawLine=p.rawScore?`<div class="paper-raw">Raw Score: ${p.rawScore}</div>`:'';
+      const sourceLine=`<div class="paper-source">Source: ${getSourceLabel(p.source)}</div>`;
+      return `<div class="paper-card" onclick="openPaperLink(${JSON.stringify(p.source)})"><div class="paper-meta"><span class="paper-date">${p.displayDate}</span><span class="paper-category">${p.category}</span><span class="paper-score" style="color:${color};border:1px solid ${color}40;background:${color}12">${scoreLabel}</span></div><div class="paper-title">${p.title}</div><div class="paper-auth">by ${p.author}</div><div class="paper-highlight">${p.highlight}</div>${sourceLine}${rawLine}</div>`;
+    }).join('');
+  }
+  paperCount.innerHTML=`Showing <span>${filtered.length}</span> of <span>${papersData.length}</span> curated papers`;
+}
+
+function openPaperLink(url){
+  if(!url)return;
+  window.open(url,'_blank');
+}
+
+async function loadPapers(){
+  try{
+    const response=await fetch(sheetUrl);
+    if(!response.ok)throw new Error('Failed to fetch reading list');
+    const csv=await response.text();
+    const records=parseCSV(csv);
+    papersData=records.map(buildPaperObject).filter(p=>p.title&&p.source);
+    if(!papersData.length)throw new Error('No paper data available');
+    renderFilters();
+    filterPapers();
+  } catch(err){
+    papersGrid.innerHTML='<div class="paper-error">Unable to load the reading list right now.</div>';
+    paperCount.innerHTML='';
+    console.error('Paper feed load failed',err);
+  }
+}
+loadPapers();
+
 </script>
 </body>
 </html>
