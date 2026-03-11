@@ -287,7 +287,6 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
       <div class="stat"><div class="stat-num">91%</div><div class="stat-label">Domain Accuracy</div></div>
       <div class="stat"><div class="stat-num">$52M</div><div class="stat-label">Quarterly Impact</div></div>
       <div class="stat"><div class="stat-num">80%</div><div class="stat-label">Recall Errors Cut</div></div>
-      <div class="stat"><div class="stat-num">252</div><div class="stat-label">Papers Read</div></div>
     </div>
     <div class="hero-cta">
       <a href="#project" class="btn btn-primary">See What I Built</a>
@@ -319,7 +318,7 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
           Outside work, I obsess over <em>RL fine-tuning</em>, specifically what happens when you teach LLMs and <em>small language models</em> through environment feedback rather than human labels, and <em>evolutionary algorithms</em>, which are basically gradient-free optimisation running for 3.8 billion years. I keep thinking there's something underexplored in hybrid evolutionary-RL approaches for sparse reward problems. And then there's <em>astrophysics</em>, my completely impractical love: there's something clarifying about knowing your billion-parameter model runs on a pale blue dot orbiting an unremarkable star.
         </p>
         <p>
-          What I've come to value most in myself is not depth in one lane, but the ability to work across all of them. I know a little about a lot, and more importantly, I have the taste to connect the dots between them. I'm the kind of person who makes everyone else's ideas actually cohere, who can hold AI, markets, culture, and behaviour together in a single coherent narrative without losing the thread. As AI takes over execution, that connector becomes the role worth being.
+          I know a little about a lot, but what matters more is the taste to connect the dots: holding AI, markets, culture, and behaviour together into a single coherent narrative and making everyone else's ideas actually cohere. In a world where AI handles execution, that connector becomes irreplaceable.
         </p>
         <div class="about-interests">
           <div class="interests-title">Things I Think About Outside Work</div>
@@ -567,7 +566,7 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
     <div class="section-kicker">Weekly Reading</div>
     <h2>LLM Research<br><span style="color:var(--green)">Hub</span></h2>
     <p class="research-desc">
-      Every week I read papers obsessively. Not just to stay current, but because the best ideas in AI almost always come from somewhere unexpected. 252 papers read, scored, and distilled. Click any card to expand the full takeaway.
+      Every week I read papers obsessively, not just to stay current but because the best ideas in AI almost always come from somewhere unexpected. A lot of papers read, scored, and distilled. Click any card to expand the full takeaway.
     </p>
     <div class="research-controls">
       <input type="text" class="search-box" id="paperSearch" placeholder="Search papers..." oninput="filterPapers()">
@@ -878,6 +877,12 @@ async function loadPapers(){
   }
 }
 loadPapers();
+
+// cert cards → LinkedIn certifications
+document.querySelectorAll('.cert-card').forEach(card=>{
+  card.style.cursor='pointer';
+  card.addEventListener('click',()=>window.open('https://www.linkedin.com/in/hrudaia0512/details/certifications/','_blank','noopener,noreferrer'));
+});
 
 </script>
 </body>
