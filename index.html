@@ -563,6 +563,20 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
           <small>Contextual VQA on Remote Sensing · SmartCom 2025</small>
         </div>
       </div>
+      <div class="award-img-wrap fade-up" style="transition-delay:0.25s;" onclick="openLightbox('merit.jpeg')">
+        <img src="merit.jpeg" alt="Best Final Year Project Certificate of Merit">
+        <div class="award-img-label">
+          <span>Certificate of Merit (Best FYP)</span>
+          <small>1st Best Final Year Project · IT · Vasavi College of Engineering</small>
+        </div>
+      </div>
+      <div class="award-img-wrap fade-up" style="transition-delay:0.3s;" onclick="openLightbox('IEEE.png')">
+        <img src="IEEE.png" alt="IEEE Chapter Formation Approval">
+        <div class="award-img-label">
+          <span>IEEE Student Branch Chapter Approval</span>
+          <small>Computational Intelligence & GRSS societies · VCE</small>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -769,8 +783,23 @@ function buildPaperObject(record){
 
 function formatDate(dateStr){
   if(!dateStr)return 'Unknown Date';
+  
+  // Parse DD/MM/YYYY format
+  const parts = dateStr.split('/');
+  if (parts.length === 3) {
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const year = parseInt(parts[2], 10);
+    if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+      const parsed = new Date(year, month, day);
+      if (!isNaN(parsed.getTime())) {
+        return parsed.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      }
+    }
+  }
+
   const parsed=new Date(dateStr);
-  if(Number.isNaN(parsed))return dateStr;
+  if(isNaN(parsed.getTime()))return dateStr;
   return parsed.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 }
 
