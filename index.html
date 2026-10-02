@@ -531,6 +531,7 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
           <li><strong>Amazon ML Summer School</strong>  Selected apprentice, mentored by Amazon Scientists, graduated with distinction.</li>
           <li><strong>1 of 400 Google DSC Leads</strong> nationwide. Built a developer community of 500+ peers.</li>
           <li><strong>IEEE Student Branch Chair</strong> for GRSS and CIS chapters. Ran 3+ nationwide workshops.</li>
+          <li><strong>Vidyarthi Vigyan Manthan (VVM) National Finalist</strong>  Selected for the National Camp at IIT Delhi, organized by VIBHA, Vigyan Prasar &amp; NCERT.</li>
         </ul>
       </div>
     </div>
@@ -584,6 +585,13 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
           <small>Computer Science & Engineering · Jan-Apr 2023</small>
         </div>
       </div>
+      <div class="award-img-wrap fade-up" style="transition-delay:0.4s;" onclick="openLightbox('vvm.png')">
+        <img src="vvm.png" alt="Vidyarthi Vigyan Manthan National Camp Finalist">
+        <div class="award-img-label">
+          <span>VVM National Finalist</span>
+          <small>National Camp · IIT Delhi · VIBHA &amp; Vigyan Prasar</small>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -611,7 +619,8 @@ h1:hover{animation:glitch 0.3s ease-in-out;}
     <div class="section-kicker">Credentials</div>
     <h2>Licenses &amp;<br><span style="color:var(--green)">Certifications</span></h2>
     <div class="certs-grid" id="certsGrid">
-      <!-- Top 5 always visible -->
+      <!-- Top certs always visible -->
+      <div class="cert-card fade-up" data-url="ClaudeCertifiedCertificate20260925-22-edi370.pdf"><div class="cert-logo" style="background:rgba(240,106,60,0.15);color:#f06a3c;">CL</div><div class="cert-info"><div class="cert-name">Claude Certified Architect &ndash; Professional</div><div class="cert-issuer">Anthropic · <span style="color:var(--green);font-size:8px;">View Certificate ↗</span></div><div class="cert-date">Sep 2026</div></div></div>
       <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(240,106,60,0.15);color:#f06a3c;">CL</div><div class="cert-info"><div class="cert-name">Claude Certified Architect &ndash; Foundation</div><div class="cert-issuer">Anthropic</div><div class="cert-date">2026</div></div></div>
       <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(255,112,67,0.15);color:#ff7043;">HF</div><div class="cert-info"><div class="cert-name">AI Agents Fundamentals</div><div class="cert-issuer">Hugging Face</div><div class="cert-date">Apr 2025</div></div></div>
       <div class="cert-card fade-up"><div class="cert-logo" style="background:rgba(0,120,215,0.15);color:#5ea7f5;">MS</div><div class="cert-info"><div class="cert-name">Azure AI Engineer Associate</div><div class="cert-issuer">Microsoft · ID: 44AE089657AD473</div><div class="cert-date">Jan 2025</div></div></div>
@@ -922,10 +931,16 @@ async function loadPapers(){
 }
 loadPapers();
 
-// cert cards → LinkedIn certifications
+// cert cards → LinkedIn certifications or specific certificate
 document.querySelectorAll('.cert-card').forEach(card=>{
   card.style.cursor='pointer';
-  card.addEventListener('click',()=>window.open('https://www.linkedin.com/in/hrudaia0512/details/certifications/','_blank','noopener,noreferrer'));
+  card.addEventListener('click',()=>{
+    if(card.dataset.url){
+      window.open(card.dataset.url,'_blank','noopener,noreferrer');
+    }else{
+      window.open('https://www.linkedin.com/in/hrudaia0512/details/certifications/','_blank','noopener,noreferrer');
+    }
+  });
 });
 
 </script>
