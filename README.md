@@ -70,7 +70,7 @@ Large Language Models (LLMs) deployed in enterprise and mission-critical workflo
 ---
 
 ### 2. Contextual Visual Question Answering on Remote Sensing Images
-* **Authors:** Hrudai Aditya Dharmala et al.
+* **Authors:** Hrudai Aditya Dharmala, Ajay Kumar Thallada, Kovvur Ram Mohan Rao
 * **Venue:** Springer Lecture Notes in Networks and Systems (LNNS, Vol. 1465, pp. 387–398)
 * **Conference:** SmartCom 2025
 * **DOI:** [`10.1007/978-981-96-7517-3_33`](https://link.springer.com/chapter/10.1007/978-981-96-7517-3_33)
