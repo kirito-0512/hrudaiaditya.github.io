@@ -94,6 +94,7 @@ Large Language Models (LLMs) deployed in enterprise and mission-critical workflo
 * **Infosys Awards for Excellence 2025-26 (Bronze):** Platforms or Software-Based Solutions or Accelerators, awarded for *Infosys Agentic Foundry* by CEO & MD Salil S. Parekh.
 * **Infosys Exuberance Awards 2025:** AI Impact and Automation Excellence Award, presented by Hyderabad STP DC Head.
 * **OSPO CodeCon Star 2025:** Won the code contribution category at Infosys CodeCon, recognized by CTO Mohammed Rafee Tarafdar and Head of OSPO Prabhat Kumar.
+* **Stanford Hackathon – Top 5% Performer:** Ranked among the Top 5% performers for outstanding creativity, innovation, and technical excellence, recognized by Infosys (InfyRewards+ & InfyGold+).
 * **Amazon ML Summer School Apprentice:** Selected apprentice, mentored by Amazon Scientists; graduated with distinction.
 * **Google DSC Lead:** 1 of 400 leads nationwide; built a developer community of 500+ peers.
 * **IEEE Student Branch Chair:** GRSS & CIS chapters; conducted 3+ national-level technical workshops.
